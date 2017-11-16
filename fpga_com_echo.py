@@ -11,7 +11,7 @@ class MyThread(Thread):
         Thread.__init__(self)
     def run(self):
         call(["C:\\u-blox\\gallery\\ubx\\pts\\win\\2017.09_KM\\bin\\tracecap.bat", "--config", "UFP1_KM", "--axf",
-              "CORTEX_M7_APP", "BUILD\KM_Initial_port.axf", "--start", "CORTEX_M7_APP", "--address", "10.17.4.114" ,"--timeout","300","--nohwtrace","--notrace"])
+              "CORTEX_M7_APP", "BUILD\KM_Initial_port.elf", "--start", "CORTEX_M7_APP", "--address", "10.17.4.114" ,"--timeout","300","--nohwtrace","--notrace"])
 
 #tracecap --config UFP1_KM --axf CORTEX_M7_APP <mbed application> --start CORTEX_M7_APP --address 10.17.4.114
 
