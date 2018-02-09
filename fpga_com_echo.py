@@ -5,13 +5,15 @@ from threading import Thread
 from subprocess import call
 import os
 from time import *
+import argparse
 
 class MyThread(Thread):
-    def __init__(self):
+    def __init__(self, elf_path = "KM_Serial_Fifo\\BUILD\\R5XXX\\ARM\\KM_Serial_Fifo.elf"):
+        self.elf_path = elf_path
         Thread.__init__(self)
     def run(self):
         call(["C:\\u-blox\\gallery\\ubx\\pts\\win\\2017.09_KM\\bin\\tracecap.bat", "--config", "UFP1_KM", "--axf",
-              "CORTEX_M7_APP", "KM_Serial_Fifo\\BUILD\\R5XXX\\ARM\\KM_Serial_Fifo.elf", "--start", "CORTEX_M7_APP", "--address", "10.17.4.114" ,"--timeout","400","--nohwtrace","--notrace"])
+              "CORTEX_M7_APP", self.elf_path, "--start", "CORTEX_M7_APP", "--address", "10.17.4.114" ,"--timeout","400","--nohwtrace","--notrace"])
 
 #tracecap --config UFP1_KM --axf CORTEX_M7_APP <mbed application> --start CORTEX_M7_APP --address 10.17.4.114
 
@@ -50,8 +52,13 @@ class EchoSerial():
 
 if __name__ == '__main__':
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('elf_path', type=str, default = "KM_Serial_Fifo\\BUILD\\R5XXX\\ARM\\KM_Serial_Fifo.elf", help='Elf file name filename')
+    args = parser.parse_args()
+    
     baudrate = 9600
-    myThreadOb1 = MyThread()
+    
+    myThreadOb1 = MyThread(args.elf_path)
     myThreadOb1.setName('Tracecap Thread')
     myThreadOb1.start()
     sleep(10)
